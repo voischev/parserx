@@ -1,7 +1,3 @@
-var html = '<div style="color: red;">content</div>';
-
-Parserx(html);
-
 function Parserx(html) {
     var result = [];
     var node;
@@ -9,26 +5,26 @@ function Parserx(html) {
 
     this._index = 0;
     this._len = html.length;
-    this._isTagOpen = false;
+    this._isNodeOpen = false;
 
-    this._opentag = function() {
-        this._isTagOpen = true;
-        this._opentagIndex = this._index;
-        console.log('_opentag');
+    this._opennode = function() {
+        this._isNodeOpen = true;
+        this._openNodeIndex = this._index;
+        console.log('_opennode');
     };
 
-    this._closetag = function() {
-        this._isTagOpen = false;
-        console.log('_closetag');
+    this._closenode = function() {
+        this._isNodeOpen = false;
+        console.log('_closenode');
     };
 
-    this.onopentag = function() {
-        console.log(this._stream.substring(this._opentagIndex, this._index + 1));
-        console.log('onopentag', this._opentagIndex);
+    this.onopennode = function() {
+        console.log(this._stream.substring(this._openNodeIndex, this._index + 1));
+        console.log('onopennode', this._openNodeIndex);
     };
 
-    this.onclosetag = function() {
-        console.log('onclosetag');
+    this.onclosenode = function() {
+        console.log('onclosenode');
     };
 
     this.onend = function onend() {
@@ -46,23 +42,23 @@ function Parserx(html) {
 
     while(this._charCurrent) {
         if(
-            !this._isTagOpen &&
+            !this._isNodeOpen &&
             this._charCurrent === '<' &&
             this._charNext !== '/'
-        ) this._opentag();
+        ) this._opennode();
         else if(
-            this._isTagOpen &&
+            this._isNodeOpen &&
             this._charCurrent === '<' &&
             this._charNext === '/'
-        ) this._closetag();
+        ) this._closenode();
         else if(
-            this._isTagOpen &&
+            this._isNodeOpen &&
             this._charCurrent === '>'
-        ) this.onopentag();
+        ) this.onopennode();
         else if(
-            !this._isTagOpen &&
+            !this._isNodeOpen &&
             this._charCurrent === '>'
-        ) this.onclosetag();
+        ) this.onclosenode();
 
         if(!this._charNext) this.onend();
 
@@ -70,3 +66,31 @@ function Parserx(html) {
     }
 
 }
+
+/* istanbul ignore next */
+(function(global) {
+
+var defineAsGlobal = true;
+
+if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = Parserx;
+    defineAsGlobal = false;
+}
+
+if (typeof modules === 'object' && typeof modules.define === 'function') {
+    modules.define('postHTMLRender', function(provide) {
+        provide(Parserx);
+    });
+    defineAsGlobal = false;
+}
+
+if (typeof define === 'function') {
+    define(function(require, exports, module) {
+        module.exports = Parserx;
+    });
+    defineAsGlobal = false;
+}
+
+defineAsGlobal && (global.Parserx = Parserx);
+
+})(typeof window !== 'undefined'? window: global);
