@@ -1,0 +1,24 @@
+{
+  "name": "parserx",
+  "version": "0.0.0",
+  "description": "Parser HTML/XML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voischev/parserx.git"
+  },
+  "keywords": [
+    "parser",
+    "html",
+    "xml"
+  ],
+  "author": "Voischev Ivan <voischev.ivan@ya.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/voischev/parserx/issues"
+  },
+  "homepage": "https://github.com/voischev/parserx#readme"
+}
