@@ -2,9 +2,14 @@
   "name": "parserx",
   "version": "0.0.0",
   "description": "Parser HTML/XML",
-  "main": "index.js",
+  "main": "lib/parserx.js",
   "scripts": {
-    "test": "mocha"
+    "pretest": "npm run lint",
+    "test": "npm run coverage",
+    "lint": "jshint . && jscs -v .",
+    "coverage": "istanbul cover --report text --report html --report lcov node_modules/mocha/bin/_mocha",
+    "preversion": "npm run lint && npm test",
+    "postversion": "git push && git push --tags && rm -rf coverage"
   },
   "repository": {
     "type": "git",
@@ -13,7 +18,8 @@
   "keywords": [
     "parser",
     "html",
-    "xml"
+    "xml",
+    "posthtmltree"
   ],
   "author": "Voischev Ivan <voischev.ivan@ya.ru>",
   "license": "MIT",
@@ -23,6 +29,9 @@
   "homepage": "https://github.com/voischev/parserx#readme",
   "devDependencies": {
     "chai": "^3.4.1",
+    "istanbul": "^0.4.1",
+    "jscs": "^2.6.0",
+    "jshint": "^2.8.0",
     "mocha": "^2.3.4"
   }
 }

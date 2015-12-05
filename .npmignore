@@ -1,10 +1,11 @@
-.gitignore
-
 node_modules/
-
 coverage/
-build/
-
 test/
+
+.gitignore
 .travis.yml
+.editorconfig
+.jscsrc
+.jshintignore
+.jshintrc
 npm-debug.log

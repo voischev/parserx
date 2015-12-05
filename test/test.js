@@ -1,8 +1,12 @@
 /* jshint mocha: true, node: true, maxlen: false */
-var parser = require('..');
+var parser = require('../lib/parserx');
 var expect = require('chai').expect;
 
 describe('Parser test', function() {
+    it('should be parse text', function() {
+        expect(parser('Text')).to.eql(['Text']);
+    });
+
     it('should be parse comment', function() {
         expect(parser('<!--comment-->')).to.eql(['<!--comment-->']);
     });
@@ -27,10 +31,6 @@ describe('Parser test', function() {
         expect(parser('<div id="id" class="class"></div>')).to.eql([{
             tag: 'div', attrs: { id: 'id', class: 'class'} }
         ]);
-    });
-
-    it('should be parse text', function() {
-        expect(parser('Text')).to.eql(['Text']);
     });
 
     it('should be parse text in content', function() {
