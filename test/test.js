@@ -3,7 +3,7 @@ var parserx = require('../lib/parserx'),
     expect = require('chai').expect;
 
 function parse(html) {
-    console.log('INPUT HTML', html);
+    console.log('INPUT HTML: ', html);
     var result = parserx.parse(html);
     console.log('OUTPUT TREE: ', result);
     return result;
@@ -32,14 +32,14 @@ describe('Parse', function() {
         expect(
             parse('Text <tag <tag>')).to.eql([
                 'Text ',
-                { tag: 'tag', attrs: { '<tag': true }, content: [' ']}
+                { tag: 'tag', attrs: { '<tag': true }}
             ]);
     });
 
     it('`Text <tag>`', function() {
         // Error parse if tag not single tag
         expect(parse('Text <tag>')).to.eql([
-            'Text ', { tag: 'tag', content: [' '] }
+            'Text ', { tag: 'tag' }
         ]);
     });
 
@@ -55,6 +55,35 @@ describe('Parse', function() {
     it('`Text </tag>`', function() {
         // Error parse
         expect(parse('Text </tag>')).to.eql(['Text ']);
+    });
+
+    // Attrs
+    it('`<tag attr>`', function() {
+        // Error parse
+        expect(parse('<tag attr>')).to.eql([{
+            tag: 'tag', attrs: { attr: true }}
+        ]);
+    });
+
+    it('`<tag attr=1>`', function() {
+        // Error parse
+        expect(parse('<tag attr=1>')).to.eql([{
+            tag: 'tag', attrs: { attr: '1' }}
+        ]);
+    });
+
+    it('`<tag attr=111>`', function() {
+        // Error parse
+        expect(parse('<tag attr=111>')).to.eql([{
+            tag: 'tag', attrs: { attr: '111' }}
+        ]);
+    });
+
+    it('`<tag attr="1">`', function() {
+        // Error parse
+        expect(parse('<tag attr="1">')).to.eql([{
+            tag: 'tag', attrs: { attr: '1' }}
+        ]);
     });
 
 /*
