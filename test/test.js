@@ -86,11 +86,17 @@ describe('Parse', function() {
         ]);
     });
 
-/*
     it('should be parse comment', function() {
         expect(parse('<!--comment-->')).to.eql(['<!--comment-->']);
     });
 
+    it('TTTTTTEEEEESSSSSTTTTT', function() {
+        expect(parse('<div><div><div></div></div></div>'))
+        .to.eql([
+            { tag: 'div', content: [{ tag: 'div', content: [{ tag: 'div' }] }] }
+        ]);
+    });
+/*
     it('should be parse comment in content', function() {
         expect(parse('<div><!--comment--></div>')).to.eql([{tag: 'div', content: ['<!--comment-->']}]);
     });
