@@ -21,7 +21,7 @@
     "disallowSpacesInFunctionExpression": {
         "beforeOpeningRoundBrace": true
     },
-    "disallowSpacesInConditionalExpression": {
+    "requireSpacesInConditionalExpression": {
         "afterTest": true,
         "afterConsequent": true
     },
